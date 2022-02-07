@@ -5,8 +5,6 @@ const Cast = require('../../util/cast');
 const log = require('../../util/log');
 const socket = new WebSocket('ws://localhost:8083');
 
-socket.onmessage = function (event) { please(event); }
-
 payload = '0';
 socket.onmessage = ({data}) => {
 
@@ -98,7 +96,7 @@ class Scratch3NewBlocks {
             },
             translation_map: {
                 it: {
-                    'smartgridcategoryName': 'asdasdasd',
+                    'name': 'asdasdasd',
                 }
             }
         };
