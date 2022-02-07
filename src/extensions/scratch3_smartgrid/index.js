@@ -6,12 +6,14 @@ const log = require('../../util/log');
 const socket = new WebSocket('ws://localhost:8083');
 
 payload = '0';
+timer = '0';
 socket.onmessage = ({data}) => {
 
     console.log(data);
     if (data !== undefined) {
-        console.log(data);
-        payload= data;
+        console.log(JSON.parse(data));
+        payload = JSON.parse(data);
+        timer = payload.Time;
     }
 
 };
@@ -86,6 +88,16 @@ class Scratch3NewBlocks {
                             defaultValue: ""
                         }
                     }
+                },
+                {
+                    opcode: 'time',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'time',
+                        default: 'Time',
+                        description: 'when a keyboard key is pressed'
+                    }),
+
                 }
             ],
             menus: {
@@ -95,7 +107,7 @@ class Scratch3NewBlocks {
                 },
             },
             translation_map: {
-                it: {
+                'it': {
                     'name': 'asdasdasd',
                 }
             }
@@ -104,6 +116,10 @@ class Scratch3NewBlocks {
 
     payload (args) {
         return payload;
+    };
+
+    time (args) {
+        return timer;
     }
 }
 
