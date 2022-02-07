@@ -5,39 +5,18 @@ const {func} = require('prop-types');
 const {stringify} = require('query-string');
 const {data} = require('autoprefixer');
 
-const socket = new WebSocket('ws://localhost:8083');
-
-socket.onmessage = function (event) { please(event); }
-
-//function please (event) {
-//    console.log(event.data);
-//
-//    //if (event.data !== undefined)
-//    //    if(typeof (event.data) !== 'undefined')
-//    //        console.log(event);
-//    //        //asd = JSON.stringify(event.data);
-//    //        asd = event.data;
-//    //        //weq = JSON.parse(data);
-//    //        console.log(asd);
-//
-//}
-payload = '0';
-socket.onmessage = ({data}) => {
-    //console.log(data);
-    //asd = data;
-    //console.log(asd);
-    //if (asd !== undefined) {
-    //    console.log(asd);
-    //    weq = asd;
-    //}
-    console.log(data);
-    if (data !== undefined) {
-            console.log(data);
-            payload= data;
-        }
-
-};
-
+/*
+*payload = '0';
+*socket.onmessage = ({data}) => {
+*
+*    console.log(data);
+*    if (data !== undefined) {
+*            console.log(data);
+*            payload= data;
+*        }
+*
+*};
+*/
 
 
 
@@ -58,7 +37,6 @@ class Scratch3MotionBlocks {
     getPrimitives () {
         return {
             motion_movesteps: this.moveSteps,
-            motion_move100steps: this.move100Steps,
             motion_gotoxy: this.goToXY,
             motion_goto: this.goTo,
             motion_turnright: this.turnRight,
@@ -116,15 +94,7 @@ class Scratch3MotionBlocks {
 
 
     }
-
-    move100Steps (args, util) {
-        const steps = 100;
-        const radians = MathUtil.degToRad(90 - util.target.direction);
-        const dx = steps * Math.cos(radians);
-        const dy = steps * Math.sin(radians);
-        util.target.setXY(util.target.x + dx, util.target.y + dy);
-    }
-
+    
     goToXY (args, util) {
         const x = Cast.toNumber(args.X);
         const y = Cast.toNumber(args.Y);
