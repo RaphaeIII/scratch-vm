@@ -94,7 +94,7 @@ class Scratch3MotionBlocks {
 
 
     }
-    
+
     goToXY (args, util) {
         const x = Cast.toNumber(args.X);
         const y = Cast.toNumber(args.Y);
@@ -290,8 +290,7 @@ class Scratch3MotionBlocks {
     }
 
     getX (args, util) {
-        //return this.limitPrecision(util.target.x);
-        return[payload];
+        return this.limitPrecision(util.target.x);
     }
 
     getY (args, util) {
