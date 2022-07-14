@@ -39,6 +39,7 @@ const PowerMeterMes = {
     POWER: 'Power',
     VOLTAGE: 'Voltage',
     CURRENT: 'Current',
+    ENERGY: 'Energy',
 };
 
 const PowerMeterChannel = {
@@ -61,6 +62,10 @@ const SwitchBoard = {
     B3: 'B3',
     B4: 'B4',
     ALL: 'All',
+    LINE1: 'Line1',
+    LINE2: 'Line2',
+    LINE3: 'Line3',
+    LINE4: 'Line4',
 };
 
 const Simulation = {
@@ -101,15 +106,6 @@ class Scratch3NewBlocks {
                 value: SwitchBoard.A4
             },
             {
-                text: 'All',
-                value: SwitchBoard.ALL
-            }
-        ];
-    };
-
-    get SWITCH_BOARD_OUT() {
-        return [
-            {
                 text: 'B1',
                 value: SwitchBoard.B1
             },
@@ -124,10 +120,27 @@ class Scratch3NewBlocks {
             {
                 text: 'B4',
                 value: SwitchBoard.B4
+            }
+        ];
+    };
+
+    get SWITCH_BOARD_OUT() {
+        return [
+            {
+                text: 'Line1',
+                value: SwitchBoard.LINE1
             },
             {
-                text: 'All',
-                value: SwitchBoard.ALL
+                text: 'Line2',
+                value: SwitchBoard.LINE2
+            },
+            {
+                text: 'Line3',
+                value: SwitchBoard.LINE3
+            },
+            {
+                text: 'Line4',
+                value: SwitchBoard.LINE4
             }
         ];
     };
@@ -143,8 +156,12 @@ class Scratch3NewBlocks {
                 value: PowerMeterMes.VOLTAGE
             },
             {
-                text: 'Amperage',
+                text: 'Current',
                 value: PowerMeterMes.CURRENT
+            },
+            {
+                text: 'Energy',
+                value: PowerMeterMes.ENERGY
             }
         ];
     };
