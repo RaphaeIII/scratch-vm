@@ -42,9 +42,17 @@ const PowerMeterMes = {
     ENERGY: 'Energy',
 };
 
+const SimulationTime = {
+    MINUTE: 'Minute',
+    HOUR: 'Hour',
+    DAY: 'Day',
+    WEEK: 'Week',
+    MONTH: 'Month',
+};
+
 const PowerMeterChannel = {
     A: 'A',
-    B: 'B',
+    B: 'B'
 };
 
 const PowerStationFE = {
@@ -203,6 +211,31 @@ class Scratch3NewBlocks {
         ];
     };
 
+    get SIMULATION_TIME_MENU() {
+        return [
+            {
+                text: 'Minute',
+                value: SimulationTime.MINUTE
+            },
+            {
+                text: 'Hour',
+                value: SimulationTime.HOUR
+            },
+            {
+                text: 'Day',
+                value: SimulationTime.DAY
+            },
+            {
+                text: 'Week',
+                value: SimulationTime.WEEK
+            },
+            {
+                text: 'Month',
+                value: SimulationTime.MONTH
+            }
+        ];
+    };
+
     get POWER_CHANNEL_MENU_1() {
         return [
             {
@@ -324,6 +357,22 @@ class Scratch3NewBlocks {
                     }
                 },
                 {
+                    opcode: 'simulation_time',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'simulation_time',
+                        default: 'Simulation Time [SM]',
+                        description: 'Get the measurement result from connection board measuring selected channel'
+                    }),
+                    arguments: {
+                        SM: {
+                            type: ArgumentType.STRING,
+                            defaultValue: SimulationTime.MINUTE,
+                            menu: 'simulation_time',
+                        }
+                    }
+                },
+                {
                     opcode: 'power_meter_cb',
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
@@ -403,6 +452,10 @@ class Scratch3NewBlocks {
                 power_ch_1: {
                     acceptReporters: true,
                     items: this.POWER_CHANNEL_MENU_1,
+                },
+                simulation_time: {
+                    acceptReporters: true,
+                    items: this.SIMULATION_TIME_MENU,
                 },
                 power_st_fe: {
                     acceptReporters: true,
@@ -588,6 +641,33 @@ class Scratch3NewBlocks {
             }
         })
     };
+
+    simulation_time(args) {
+
+        let cmd = 'Simulation Time';
+        let payload = {'Mode': args.SM};
+        let payload_json = JSON.stringify(payload)
+        let request = {'CMD': cmd, 'Payload': payload_json};
+
+        socket.send(JSON.stringify(request));
+
+        return new Promise((res, rej) => {
+            socket.onmessage = function ({data}) {
+
+                try {
+                    let response = JSON.parse(data);
+                    if (response.Done) {
+                        result = JSON.parse(response.Payload);
+                        result = result.Result;
+                        res(result);
+                    }
+                } catch (e) {
+                    rej('Connection lost or something went wrong')
+                }
+            }
+        })
+    };
+
 
     simulation(args) {
         let cmd = 'Simulation';
