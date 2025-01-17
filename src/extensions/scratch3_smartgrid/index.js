@@ -72,7 +72,7 @@ const SimulationTime = {
     MINUTE: 'Minute',
     HOUR: 'Hour',
     DAY: 'Day',
-    WEEK: 'Week',
+    //WEEK: 'Week',
     MONTH: 'Month',
 };
 
@@ -251,10 +251,10 @@ class Scratch3NewBlocks {
                 text: 'Day',
                 value: SimulationTime.DAY
             },
-            {
-                text: 'Week',
-                value: SimulationTime.WEEK
-            },
+            //{
+            //    text: 'Week',
+            //    value: SimulationTime.WEEK
+            //},
             {
                 text: 'Month',
                 value: SimulationTime.MONTH
