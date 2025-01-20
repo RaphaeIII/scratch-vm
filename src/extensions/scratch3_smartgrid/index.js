@@ -11,20 +11,20 @@ var socket = new WebSocket('ws://localhost:8083');
 function connect() {
     var socket = new WebSocket('ws://localhost:8083');
 
+    socket.onerror = function(err) {
+        console.error('Socket encountered error: ', err.message, 'Closing socket');
+        socket.close();
+    };
+
     socket.onclose = function(e) {
         console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
         setTimeout(function() {
             connect();
         }, 1000);
     };
-
-    socket.onerror = function(err) {
-        console.error('Socket encountered error: ', err.message, 'Closing socket');
-        socket.close();
-    };
 }
 
-connect();
+
 //socket.onerror = OnSocketError;
 //
 //function OnSocketError() {
@@ -503,6 +503,8 @@ class Scratch3NewBlocks {
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
 
+        connect();
+
         socket.send(JSON.stringify(request));
 
         promise = new Promise((res, rej) => {
@@ -530,6 +532,8 @@ class Scratch3NewBlocks {
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
+
+        connect();
 
         socket.send(JSON.stringify(request));
 
@@ -560,6 +564,8 @@ class Scratch3NewBlocks {
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
 
+        connect();
+
         socket.send(JSON.stringify(request));
 
         promise = new Promise((res, rej) => {
@@ -589,6 +595,8 @@ class Scratch3NewBlocks {
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
 
+        connect();
+
         socket.send(JSON.stringify(request));
 
         return new Promise((res, rej) => {
@@ -617,6 +625,8 @@ class Scratch3NewBlocks {
 
         socket.send(JSON.stringify(request));
 
+        connect();
+
         return new Promise((res, rej) => {
             socket.onmessage = function ({data}) {
 
@@ -639,6 +649,8 @@ class Scratch3NewBlocks {
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
+
+        connect();
 
         socket.send(JSON.stringify(request));
 
@@ -666,6 +678,8 @@ class Scratch3NewBlocks {
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
 
+        connect();
+
         socket.send(JSON.stringify(request));
 
         return new Promise((res, rej) => {
@@ -692,6 +706,8 @@ class Scratch3NewBlocks {
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
+
+        connect();
 
         socket.send(JSON.stringify(request));
 
