@@ -707,8 +707,6 @@ class Scratch3NewBlocks {
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
 
-        connect();
-
         socket.send(JSON.stringify(request));
 
         promise = new Promise((res, rej) => {
@@ -722,6 +720,7 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    connect();
                     rej('Connection lost or something went wrong')
                 }
             }
