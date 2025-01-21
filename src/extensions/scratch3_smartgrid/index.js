@@ -511,19 +511,22 @@ class Scratch3NewBlocks {
     }
 
 
-    switchboardcon(args) {
+    async switchboardcon(args) {
         let cmd = 'CB Connect';
         let payload = {'Source': args.IN, 'Destination': args.OUT};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
 
-        connect();
-
-        socket.send(JSON.stringify(request));
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
         promise = new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -533,6 +536,7 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -541,19 +545,22 @@ class Scratch3NewBlocks {
         console.log(promise);
     };
 
-    switchboard_disconn(args) {
+    async switchboard_disconn(args) {
         let cmd = 'CB Disconnect';
         let payload = {'Source': args.IN, 'Destination': args.OUT};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
 
-        connect();
-
-        socket.send(JSON.stringify(request));
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
         promise = new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -563,6 +570,7 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -571,7 +579,7 @@ class Scratch3NewBlocks {
         console.log(promise);
     };
 
-    powerstation(args) {
+    async powerstation(args) {
         let cmd = 'Fossil Energy';
         let args_CL = parseFloat(args.CL);
         let payload = {'FE_Selector': args.FE, 'Current_Limit': args_CL};
@@ -579,12 +587,15 @@ class Scratch3NewBlocks {
         let request = {'CMD': cmd, 'Payload': payload_json};
         let promise;
 
-        connect();
-
-        socket.send(JSON.stringify(request));
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
         promise = new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -594,6 +605,7 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -603,19 +615,23 @@ class Scratch3NewBlocks {
     };
 
 
-    power_meter_cb(args) {
+    async power_meter_cb(args) {
 
         let cmd = 'Power Meter CB';
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
+        let promise;
 
-        connect();
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
-        socket.send(JSON.stringify(request));
-
-        return new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+        promise = new Promise((res, rej) => {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -625,25 +641,32 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
         })
+
+        console.log(promise);
     };
 
 
-    powermet1(args) {
+    async powermet1(args) {
         let cmd = 'Power Meter 1';
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
+        let promise;
 
-        socket.send(JSON.stringify(request));
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
-        connect();
-
-        return new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+        promise = new Promise((res, rej) => {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -653,24 +676,31 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
         })
+
+        console.log(promise);
     };
 
-    powermet2(args) {
+    async powermet2(args) {
         let cmd = 'Power Meter 2';
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
+        let promise;
 
-        connect();
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
-        socket.send(JSON.stringify(request));
-
-        return new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+        promise = new Promise((res, rej) => {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -680,25 +710,32 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
         })
+
+        console.log(promise);
     };
 
-    simulation_time(args) {
+    async simulation_time(args) {
 
         let cmd = 'Simulation Time';
         let payload = {'Mode': args.SM};
         let payload_json = JSON.stringify(payload)
         let request = {'CMD': cmd, 'Payload': payload_json};
+        let promise;
 
-        connect();
+        if(socketInstance.readyState === 1) {
+            console.log('ok')
+            socketInstance.send(JSON.stringify(request));
+        } else {
+            await connect();
+        };
 
-        socket.send(JSON.stringify(request));
-
-        return new Promise((res, rej) => {
-            socket.onmessage = function ({data}) {
+        promise = new Promise((res, rej) => {
+            socketInstance.onmessage = function ({data}) {
 
                 try {
                     let response = JSON.parse(data);
@@ -708,10 +745,13 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
+                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
         })
+
+        console.log(promise);
     };
 
 
