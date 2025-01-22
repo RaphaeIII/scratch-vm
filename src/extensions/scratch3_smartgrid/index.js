@@ -11,61 +11,23 @@ let socketInstance;
 function connect() {
     let socket = new WebSocket('ws://localhost:8083');
     socket.onopen = function(e) {
-        console.log('Connected !!!!!')
+        console.log('Connected')
     }
 
     socket.onclose = function(e) {
-        console.log('Connection CLoseeeeeeed ;((')
+        console.log('Connection Closed. Reconnecting...')
         if(socket.readyState === 3) {
             setTimeout(() => {
                 connect();
-            }, 1000)
+            }, 500)
         }
     }
     socketInstance = socket;
-
-    // socket.onerror = function(err) {
-    //     console.error('Socket encountered error: ', err.message, 'Closing socket');
-    //     socket.close();
-    // };
-
-    // socket.onclose = function(e) {
-    //     console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
-    //     setInterval(function() {
-    //         connect();
-    //     }, 1000);
-    // };
 }
 
 connect();
 
-
-//socket.onerror = OnSocketError;
-//
-//function OnSocketError() {
-//    alert('Please Reload The App');
-//}
-
 let result;
-
-
-//Hide Error
-// function debug_done() {
-//     window.onerror = function (message, url, lineNumber) {
-//         // code to execute on an error
-//         return true; // prevents browser error messages
-//     };
-// }
-
-
-// function sleep(milliseconds) {
-//     var start = new Date().getTime();
-//     for (var i = 0; i < 1e7; i++) {
-//         if ((new Date().getTime() - start) > milliseconds) {
-//             break;
-//         }
-//     }
-// }
 
 const PowerMeterMes = {
     POWER: 'Power',
@@ -511,7 +473,7 @@ class Scratch3NewBlocks {
     }
 
 
-    async switchboardcon(args) {
+    switchboardcon(args) {
         let cmd = 'CB Connect';
         let payload = {'Source': args.IN, 'Destination': args.OUT};
         let payload_json = JSON.stringify(payload)
@@ -519,10 +481,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -536,7 +498,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -545,7 +506,7 @@ class Scratch3NewBlocks {
         console.log(promise);
     };
 
-    async switchboard_disconn(args) {
+    switchboard_disconn(args) {
         let cmd = 'CB Disconnect';
         let payload = {'Source': args.IN, 'Destination': args.OUT};
         let payload_json = JSON.stringify(payload)
@@ -553,10 +514,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -570,7 +531,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -579,7 +539,7 @@ class Scratch3NewBlocks {
         console.log(promise);
     };
 
-    async powerstation(args) {
+    powerstation(args) {
         let cmd = 'Fossil Energy';
         let args_CL = parseFloat(args.CL);
         let payload = {'FE_Selector': args.FE, 'Current_Limit': args_CL};
@@ -588,10 +548,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -605,7 +565,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -615,7 +574,7 @@ class Scratch3NewBlocks {
     };
 
 
-    async power_meter_cb(args) {
+    power_meter_cb(args) {
 
         let cmd = 'Power Meter CB';
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
@@ -624,10 +583,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -641,7 +600,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -651,7 +609,7 @@ class Scratch3NewBlocks {
     };
 
 
-    async powermet1(args) {
+    powermet1(args) {
         let cmd = 'Power Meter 1';
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
         let payload_json = JSON.stringify(payload)
@@ -659,10 +617,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -676,7 +634,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -685,7 +642,7 @@ class Scratch3NewBlocks {
         console.log(promise);
     };
 
-    async powermet2(args) {
+    powermet2(args) {
         let cmd = 'Power Meter 2';
         let payload = {'Channel': args.PCH, 'Mode': args.PM};
         let payload_json = JSON.stringify(payload)
@@ -693,10 +650,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -710,7 +667,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -719,7 +675,7 @@ class Scratch3NewBlocks {
         console.log(promise);
     };
 
-    async simulation_time(args) {
+    simulation_time(args) {
 
         let cmd = 'Simulation Time';
         let payload = {'Mode': args.SM};
@@ -728,10 +684,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -745,7 +701,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
@@ -755,7 +710,7 @@ class Scratch3NewBlocks {
     };
 
 
-   async simulation(args) {
+   simulation(args) {
         let cmd = 'Simulation';
         let payload = {'Mode': args.IN};
         let payload_json = JSON.stringify(payload)
@@ -763,10 +718,10 @@ class Scratch3NewBlocks {
         let promise;
 
         if(socketInstance.readyState === 1) {
-            console.log('ok')
+            console.log('Request Sent')
             socketInstance.send(JSON.stringify(request));
         } else {
-            await connect();
+            return
         };
 
         promise = new Promise((res, rej) => {
@@ -780,7 +735,6 @@ class Scratch3NewBlocks {
                         res(result);
                     }
                 } catch (e) {
-                    // connect();
                     rej('Connection lost or something went wrong')
                 }
             }
