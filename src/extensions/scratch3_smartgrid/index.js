@@ -7,15 +7,25 @@ const menuIconURI = 'data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uY
 const blockIconURI = 'data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDIuMzMgMzAyLjMzIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6bm9uZTt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPklRPC90aXRsZT48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01NzQuMTcsMjU0LjU2YzEuNjUsMzAuMTMuMjMsMTAxLjg5LDAsMTEyLjY4bC0xLjMuNzJjLTguNTYtOS4wNy0xNy4xMy0xOC4xMy0yNi0yNy41M1YzMjkuNzVjMC0yMC4xNywwLTQwLjMzLDAtNjAuNS0uMDctMjkuNjctMjEuNDMtNTIuNTUtNTAuOTItNTMuMjUtMzAuMzUtLjczLTUyLDIzLTUyLjc3LDQ4LjU5cS0xLjE1LDQwLjcxLDAsODEuNDhjMS4wOSwzNy40Miw0NCw2MC45NCw3Ni41NSw0Mi41M2EzLjMsMy4zLDAsMCwwLDEuODUtMmwtMjcuMTQtMjkuMTUsMTYuNS0xNS43NSw3MC41OCw3NS40NWMtNC44OSw1Ljk0LTEwLjg5LDEwLjM1LTE2LjQxLDE1Ljg4bC0yMC42MS0yMS44MmMtNy45MSw1LjI0LTE2LjA5LDkuNjQtMjUuMjQsMTAuNzMtMjEuODgsMi42LTQ0LDQuOS02NC42Ny01LjQ4LTIyLjk1LTExLjU0LTM2Ljg2LTMwLjMyLTM4LjQ3LTU2LjE3LTIuMS0zMy43Ni0uNzItNjcuNjItLjY3LTEwMS40NCwwLTIyLjc2LDguNzktNDEuODMsMjYuOTMtNTYsMTEuNTktOS4wNywyNC44NC0xNC4yOCwzOS42Ny0xNC4zNSwxMS44LS4wNiwyMy43My0xLjQ1LDM1LjQsMSwxMy44MiwyLjkxLDI1LjE5LDguNDgsMzQuMTcsMTYuNjJhNzEuMTUsNzEuMTUsMCwwLDEsMjIuNjEsNDguNDlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzExLjc3IC0xNjIuMzUpIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTg1LjkxLDI0NC43NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMS43NyAtMTYyLjM1KSIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1Ni44NSw0MjMuNjR2LTIzNWgyN3YyMzVaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzExLjc3IC0xNjIuMzUpIi8+PHJlY3QgY2xhc3M9ImNscy0yIiB3aWR0aD0iMzAyLjMzIiBoZWlnaHQ9IjMwMi4zMyIvPjwvc3ZnPg==';
 const Promise = require('promise');
 let socketInstance;
+let a = 0;
 
 function connect() {
     let socket = new WebSocket('ws://localhost:8083');
+
     socket.onopen = function(e) {
+        a = 0;
+        alert('Disconnected')
         console.log('Connected')
     }
 
     socket.onclose = function(e) {
         console.log('Connection Closed. Reconnecting...')
+
+        if(a === 0){
+            alert('Connection Lost')
+            a = 1
+        }
+
         if(socket.readyState === 3) {
             setTimeout(() => {
                 connect();
