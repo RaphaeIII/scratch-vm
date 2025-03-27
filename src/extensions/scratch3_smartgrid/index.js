@@ -14,18 +14,16 @@ function connect() {
 
     socket.onopen = function(e) {
         a = 0;
-        alert('Disconnected')
+        alert('Connected')
         console.log('Connected')
     }
 
     socket.onclose = function(e) {
         console.log('Connection Closed. Reconnecting...')
-
         if(a === 0){
-            alert('Connection Lost')
+            alert('Connection Lost. Reconnecting...')
             a = 1
         }
-
         if(socket.readyState === 3) {
             setTimeout(() => {
                 connect();
@@ -497,7 +495,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -530,7 +528,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -564,7 +562,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -599,7 +597,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -633,7 +631,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -666,7 +664,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -700,7 +698,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
@@ -734,7 +732,7 @@ class Scratch3NewBlocks {
             return
         };
 
-        promise = new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             socketInstance.onmessage = function ({data}) {
 
                 try {
